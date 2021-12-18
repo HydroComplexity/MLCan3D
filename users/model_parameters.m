@@ -1154,6 +1154,7 @@ function para_but_load3Dfile_help_Callback(hObject, eventdata, handles)
 % hObject    handle to para_but_load3Dfile_help (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+model_3dflow_help(3);
 
 
 % --- Executes on button press in pushbutton12.

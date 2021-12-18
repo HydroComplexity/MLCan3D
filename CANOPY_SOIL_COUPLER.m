@@ -209,7 +209,7 @@ VARIABLES.SOIL.TKsoil=VERTSTRUC.TK_sol;
 if SWITCHES.soil3D
     % TOPO SLOPE CALCULATIONS
     % dem, nx, ny etc loaded in LOAD_SITE_INFO.m
-    topo = double(dem - min(dem,[],'all'));    % Get normalized topography from DEM layer
+    topo = double(dem - mean(dem(:)));    % Get normalized topography from DEM layer
 
     % calculate sin and cos of topography slopes
     % get height difference between cells
@@ -622,7 +622,6 @@ for yy = 1:length(Each_year)
         net_qinflL = VARIABLES.SOIL.net_qinflL;
         drainlitter = VARIABLES.SOIL.drainlitter;
         volliqli = VARIABLES.SOIL.volliqli;
-        
         
         % Implicit Solution
         if (SWITCHES.soil3D)

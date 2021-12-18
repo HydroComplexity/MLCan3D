@@ -57,7 +57,7 @@ handles.output = hObject;
 
 load './Temps/temporary.mat' 'working_name';
 load ('./Temps/temp_variable.mat', 'Sim_species', 'Sim_species_con', 'vanGen', 'RHC', 'CO2_Ambient', 'CO2_Elev', 'CO2_Elev_con', ...
-    'Temp_Elev', 'Temp_Elev_con', 'Soil_nutrient', 'Soil_heat', 'Turbulence', 'HR', 'Sub3DFlow', ...
+    'Temp_Elev', 'Temp_Elev_con', 'Soil_nutrient', 'Soil_heat', 'Turbulence', 'HR', ...
     'Soil_C_pool1', 'N_denit', 'N_Fix', 'N_Fert', 'N_Fert_DOY', 'N_Fert_amm', 'N_Fert_nit', 'N_Fert_urea', ...
     'num_species', 'N_Uptake_RB', 'N_Remo', 'opt_root_para', 'N_Adepo', 'N_Adepo_amm', 'N_Adepo_nit');
 
@@ -97,7 +97,6 @@ set(handles.chk_soilnutrient,'Value',Soil_nutrient);
 set(handles.chk_soilheat,'Value',Soil_heat);
 set(handles.chk_Turbulence,'Value',Turbulence);
 set(handles.chk_HR,'Value',HR);
-set(handles.chk_3DFlow,'Value',Sub3DFlow);
 %set(handles.chk_entropy,'Value',Entropy);
 
 set(handles.rad_carbon_1pool,'Value',Soil_C_pool1);
@@ -190,6 +189,17 @@ end
 set(handles.uipanel_soil_CN_process,'Visible','off');
 set(handles.uipanel_soil_CN_model_process,'Visible','off');
 
+% 3D flow check for old project files
+matObj = matfile('./Temps/temp_variable.mat');
+varlist = who(matObj);
+
+if ismember('Sub3DFlow', varlist)
+    load './Temps/temp_variable.mat' 'Sub3DFlow';
+else
+    Sub3DFlow = 0;
+    save './Temps/temp_variable.mat' 'Sub3DFlow' -append;
+end
+set(handles.chk_3DFlow,'Value',Sub3DFlow);
 
 % Update handles structure
 guidata(hObject, handles);

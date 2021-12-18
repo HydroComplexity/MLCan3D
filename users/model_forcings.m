@@ -1341,6 +1341,8 @@ if Sub3DFlow
     if dx < 0 || dy < 0
         msgbox( 'Grid size not be <= 0 - Please go back to ICs FOR 3D Flow','MLCan Error','Error');
         return
+    else
+        save './Temps/temp_variable.mat' 'dx' 'dy' -append;
     end
     
     
@@ -2803,7 +2805,7 @@ function forc_but_loadDEM_help_Callback(hObject, eventdata, handles)
 % hObject    handle to forc_but_loadDEM_help (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
+model_3dflow_help(1);
 
 
 function forc_text_dy_Callback(hObject, eventdata, handles)
@@ -2833,6 +2835,7 @@ function forc_but_loadPonding_help_Callback(hObject, eventdata, handles)
 % hObject    handle to forc_but_loadPonding_help (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+model_3dflow_help(2);
 
 
 % --- Executes on button press in forc_but_loadSoilMoisture_help.
@@ -2840,6 +2843,7 @@ function forc_but_loadSoilMoisture_help_Callback(hObject, eventdata, handles)
 % hObject    handle to forc_but_loadSoilMoisture_help (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+model_3dflow_help(2);
 
 
 % --- Executes on selection change in forc_menu_plotLayer.

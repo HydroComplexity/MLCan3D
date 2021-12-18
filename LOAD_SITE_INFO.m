@@ -110,7 +110,7 @@ else
     PARAMS.CanStruc.z0 = cell2mat(para_canopy_crop_fixed(5,2));
 end
 PARAMS.CanStruc.d0 = 2/3 * PARAMS.CanStruc.hcan;                      % canopy displacement height [m]
-PARAMS.CanStruc.VAratio = 1/1000;                                     % Ratio of volume to area [m]
+PARAMS.CanStruc.VAratio = 3/1000;                                     % Ratio of volume to area [m]
 
 % RADIATION
 load './Temps/temp_variable.mat'...
@@ -463,7 +463,7 @@ if SWITCHES.soil3D
     PARAMS.SOIL3D.t_scale = 1;
 
     % default parameters
-    PARAMS.SOIL3D.k_ratio = 1.2;                  % Anisotropic Ksat, ratio of horizonal to vertical K [-]
+    PARAMS.SOIL3D.k_ratio = 1;                  % Anisotropic Ksat, ratio of horizonal to vertical K [-]
     PARAMS.SOIL3D.Ss      = 5e-4;                 % [1/m] ? Storage 
 %     Psimin = 0.0005;
 %     air_dry = -15.0;

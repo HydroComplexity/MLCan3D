@@ -41,6 +41,7 @@ function [VARIABLES, dwat,smp,kboundary,klayer,qlayer,layeruptake,layeruptake_al
 
     % model grid variables
     dzs = VERTSTRUC.dzs;    % vertical vector of soil layer thickness [m]
+    zns = VERTSTRUC.zns;
     Dzs_mat = PARAMS.SOIL3D.Dzs_mat;    % matrix version of dzs
     Topo_mat = PARAMS.SOIL3D.Topo_mat;
     nl_soil = PARAMS.Soil.nl_soil;  % number of soil layers
@@ -102,7 +103,8 @@ function [VARIABLES, dwat,smp,kboundary,klayer,qlayer,layeruptake,layeruptake_al
     Krad_mat = ScatterCol2Mat(zeros(nx,ny,nl_soil), sum(krad, 2)*3600, x_ind, y_ind, z_ind); % from [1/s] to [1/hr] sum on all species
     Rpp_mat = ScatterCol2Mat(zeros(nx,ny,nl_soil), sum(rpp, 2)/1000, x_ind, y_ind, z_ind);  % from [mm] to [m] sum on all species 
     Krad_mat(Theta_n1m <= theta_R) = 0;
-    Qroot_mat = Krad_mat.*(H_n1m-Rpp_mat);  % [m/hr] root uptake flux 3D matrix based on root Krad, positive leaving soil
+    Zns_mat = ScatterCol2Mat(zeros(nx,ny,nl_soil), zns, x_ind, y_ind, z_ind);
+    Qroot_mat = Krad_mat.*(H_n1m + Zns_mat - Rpp_mat);  % [m/hr] root uptake flux 3D matrix based on root Krad, positive leaving soil
     
     % get surface infiltration flux
     qinfl = VARIABLES.SOIL.qinfl;  % [mm/s] Net Infiltration into the soil, includs Esoil
@@ -164,32 +166,11 @@ function [VARIABLES, dwat,smp,kboundary,klayer,qlayer,layeruptake,layeruptake_al
     if mod(timestep, save_interval) == 0
         % save subsurface
         filename = sprintf('subsurface3D_%d.mat',timestep);
-        save(fullfile(pwd,output_folder,filename), 'H_out', 'Theta_out', 'K_out', 'Mbe');
+        save(fullfile(pwd,output_folder,filename), 'H_out', 'Theta_out', 'K_out', 'Qroot_mat', 'Mbe');
 
         % save overland
         filename = sprintf('overland2D_%d.mat',timestep);
-        save(fullfile(pwd,output_folder,filename), 'q_pond_sat', 'pond_depth_out');
+        save(fullfile(pwd,output_folder,filename), 'q_pond_sat', 'pond_depth_out', 'qinfl_sub', 'q_soil');
     end
 
 end
-% 
-% %% util funtions
-% % 
-% function mat = ScatterLayer2Mat(mat, layer, z_ind, increment)
-%     for k=z_ind
-%         mat(:,:,k) = layer+(k-1)*increment;
-%     end
-% end
-% 
-% function vec = MatrixVerticalStdv(mat)
-%     vec = squeeze(std(mat,0,[1,2]));
-% end
-% 
-% function topo = GetTopo(dem)
-%     topo = dem - min(dem,[],'all');
-% end
-% 
-% function PlotSurface(surface, nx, ny)
-%     [X,Y] = meshgrid(1:nx,1:ny);
-%     surf(X,Y,surface,'FaceAlpha',0.5)
-% end

@@ -627,7 +627,7 @@ if (replaced == 1)
         VARIABLES.CANOPY.CAz_history(:,tt) = VARIABLES.CANOPY.CAz_history(:,tt-1);
         VARIABLES.CANOPY.EAz_history(:,tt) = VARIABLES.CANOPY.EAz_history(:,tt-1);             
     end
-    
+    VARIABLES.timestep = tt; %Kunxuan: reset timestep to current, not last_tt.
     
     %ASSIGN
     
